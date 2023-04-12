@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="style.css"/>
+    <title>IOT WEB</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.4/dist/sweetalert2.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.4/dist/sweetalert2.min.css" />
+    <style>
+		.container {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: space-between;
+			align-items: center;
+			padding: 20px;
+		}
+		.item {
+			width: calc(20% - 20px);
+			background-color: #ddd;
+			border: 1px solid #333;
+			padding: 20px;
+			margin-bottom: 20px;
+			box-sizing: border-box;
+		}
+	</style>
+  </head>
+  <body>
+	<!-- Script to show/hide popup -->
+    <div class="container">
+      <div class="box">
+        <img id="my_image_DATlogo" src="./images/DAT_logo.png" alt="Hình ảnh trong HTML" width="10%" height="80%"/>
+        <button id="fault_button" onclick="showPopup()">Xem lỗi hiện tại</button>
+      </div>
+      <div class="box">
+        <button onclick="showPopup()">Show popup</button>
+        <button onclick="openElevator()">Open</button>
+        <button onclick="closeElevator()">Close</button>
+        <button id="up_button" onclick="changeUpArrow()">Up</button>
+    <button id="down_button" onclick="changeDownArrow()">Down</button>
+   <button id="none_button" onclick="resetArrows()">None</button>
+        <a href="Data3.html"><button>DATA</button></a>
+      </div>
+      <div class="box">
+        <img id="my_image_thangmay2" src="./images/Elevator_close.png" alt="Hình ảnh trong HTML" width="100%" height="100%"/>
+        <div id="rectangle" style="border-radius: 5%; width: 40px; height: 120px; border: 0px solid black; display: flex; flex-direction: column; justify-content: space-around; align-items: center; padding: 5px;">
+            <span><img id="Up_arrow" src="./images/Up_arrow_copy.jpg" alt="Up arrow" style="width: 30px; height: 30px;"></span>
+            <span id="tanghientai" style="font-size: 24px;"></span>
+            <span><img id="Down_arrow" src="./images/Down_arrow_copy.jpg" alt="Down arrow" style="width: 30px; height: 30px;"></span>
+          </div>
+      </div>
+      <div class="box">
+          <table border="1">
+            <tbody>
+              <tr>
+                  <td><p>Inside call</p></td>
+                    <td colspan="9">
+                      <div class="circle-container">
+                        <div class="circle">1</div>
+                        <div class="circle">2</div>
+                        <div class="circle">3</div>
+                        <div class="circle">4</div>
+                        <div class="circle">5</div>
+                        <div class="circle">6</div>
+                        <div class="circle">7</div>
+                        <div class="circle">8</div>
+                        <div class="circle">9</div>
+                        <div class="circle">10</div>
+                      </div>
+                    </td>
+                         
+              </tr>
+              <tr>
+                  <td><p>Up call</p></td>      
+                  <td colspan="9">
+                    <div class="circle-container">
+                      <div class="circle">1</div>
+                      <div class="circle">2</div>
+                      <div class="circle">3</div>
+                      <div class="circle">4</div>
+                      <div class="circle">5</div>
+                      <div class="circle">6</div>
+                      <div class="circle">7</div>
+                      <div class="circle">8</div>
+                      <div class="circle">9</div>
+                      <div class="circle">10</div>
+                    </div>
+                  </td>       
+              </tr>
+              <tr>
+                  <td><p>Down call</p></td>   
+                  <td colspan="9">
+                    <div class="circle-container">
+                      <div class="circle">1</div>
+                      <div class="circle">2</div>
+                      <div class="circle">3</div>
+                      <div class="circle">4</div>
+                      <div class="circle">5</div>
+                      <div class="circle">6</div>
+                      <div class="circle">7</div>
+                      <div class="circle">8</div>
+                      <div class="circle">9</div>
+                      <div class="circle">10</div>
+                    </div>
+                  </td>           
+              </tr>
+              <tr>
+                <td><p>Height</p></td>
+                <td id="height"></td>
+                <td><p>Running speed</p></td>
+                <td id="Running_speed"></td>
+                <td><p>Run number</p></td>
+                <td id="Run_number"></td>
+                <td><p>Voltage</p></td>
+                <td id="Voltage"></td>
+                <td><p>Current</p></td>
+                <td id="Current"></td>          
+              </tr>
+              <tr>
+                <td><p>Hall lock</p></td>
+                <td><img id="Hall_lock" src="./images/Hall_lock.png" style="background-color: #13F54E;" alt="Hình ảnh trong HTML" width="50%" height="50%"/></td>
+                <td><p>Car door lock</p></td>
+                <td><img id="Cardoor_lock" src="./images/Cardoor_lock.png" alt="Hình ảnh trong HTML" width="50%" height="50%"/></td>
+                <td><p>Open door output</p></td>
+                <td><img id="Open_door_output" src="./images/Open_door_output.png" alt="Hình ảnh trong HTML" width="50%" height="50%"/></td>
+                <td><p>Closed output</p></td>
+                <td><img id="Closed_output" src="./images/Closed_output.png" alt="Hình ảnh trong HTML" width="50%" height="50%"/></td>
+                <td><p>Open door in place</p></td>
+                <td><img id="Open_door_in_place" src="./images/Open_door_in_place.png" alt="Hình ảnh trong HTML" width="50%" height="50%"/></td>          
+              </tr>
+              <tr>
+                <td><p>Close in place</p></td>
+                <td><img id="Close_in_place" src="./images/Close_in_place.png" alt="Hình ảnh trong HTML" width="50%" height="50%"/></td>
+                <td><p>Maintenance</p></td>
+                <td><img id="Maintenance" src="./images/Maintenance.png" style="background-color: #13F54E;" alt="Hình ảnh trong HTML" width="50%" height="50%"/></td>
+                <td><p>Fault</p></td>
+                <td><img id="Fault" src="./images/Fault.png" alt="Hình ảnh trong HTML" width="50%" height="50%"/></td>
+                <td><p>Overload</p></td>
+                <td><img id="Overload" src="./images/Overload.png" alt="Hình ảnh trong HTML" width="50%" height="50%"/></td>
+                <td><p>Manufacturer mismatch</p></td>
+                <td><img src="./images/Manufacturer_mismatch.png" alt="Hình ảnh trong HTML" width="50%" height="50%"/></td>           
+              </tr>
+              <tr>
+                <td><p>Fire fighting</p></td>
+                <td><img id="Fire_fighting" src="./images/Fire_fighting.png" alt="Hình ảnh trong HTML" width="50%" height="50%"/></td>
+                <td><p>Area</p></td>
+                <td><img id="Area" src="./images/Area.png" alt="Hình ảnh trong HTML" width="50%" height="50%"/></td>
+                <td><p>Lock ladder</p></td>
+                <td><img id="Lock_ladder" src="./images/Lock_ladder.png" style="background-color: #13F54E;" alt="Hình ảnh trong HTML" width="50%" height="50%"/></td>
+                <td><p>Trapped</p></td>
+                <td><img src="./images/Trapped.png" alt="Hình ảnh trong HTML" width="50%" height="50%"/></td>
+                <td><p>Serial port exception</p></td>
+                <td><img src="./images/Serial.png" alt="Hình ảnh trong HTML" width="50%" height="50%"/></td>   
+              </tr>
+              <tr>
+                <td><p>Power supply state</p></td>
+                <td><img src="./images/Power_supply.png" alt="Hình ảnh trong HTML" width="50%" height="50%"/></td>
+                <td><p>Safety loop</p></td>
+                <td><img  id="Safety_loop" src="./images/Safety_loop.png" alt="Hình ảnh trong HTML" width="50%" height="50%"/></td>
+                <td><p>Lock loop</p></td>
+                <td><img src="./images/Lock_loop.png" alt="Hình ảnh trong HTML" width="50%" height="50%"/></td>
+                <td><p>Full load</p></td>
+                <td><img src="./images/Full_load.png" alt="Hình ảnh trong HTML" width="50%" height="50%"/></td>
+                <td><p>Parallel / Group control</p></td>
+                <td><img src="./images/Parallel.png" alt="Hình ảnh trong HTML" width="50%" height="50%"/></td>
+              </tr>
+              <tr>
+                <td><p>Driver status</p></td>
+                <td><img src="./images/Driver_status.png" alt="Hình ảnh trong HTML" width="50%" height="50%"/></td>
+                <td><p>Independent state</p></td>
+                <td><img id="Independent_state" src="./images/Independent_state.png" alt="Hình ảnh trong HTML" width="50%" height="50%"/></td> 
+                <td><p>Video surveillance</p></td>
+                <td><img src="./images/Video_surveillance.png" alt="Hình ảnh trong HTML" width="50%" height="50%"/></td>
+                <td><p>Run time</p></td>
+                <td></td>
+                <td><p>Bending times of steel wir rope</p></td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+      </div>
+      
+    </div>
+    <div>
+        <body>
+            <h1>Bảng Data</h1>
+            <a href="Test3.html"><button>Dashboard</button></a>
+            <div class="container">
+                <div class="item" id="d0">D0</div>
+                <div class="item" id="d1">D1</div>
+                <div class="item" id="d2">D2</div>
+                <div class="item" id="d3">D3</div>
+                <div class="item" id="d4">D4</div>
+                <div class="item" id="d5">D5</div>
+                <div class="item" id="d6">D6</div>
+                <div class="item" id="d7">D7</div>
+                <div class="item" id="d8">D8</div>
+                <div class="item" id="d9">D9</div>
+                <div class="item" id="d10">D10</div>
+                <div class="item" id="d11">D11</div>
+                <div class="item" id="d12">D12</div>
+                <div class="item" id="d13">D13</div>
+                <div class="item" id="d14">D14</div>
+                <div class="item" id="d15">D15</div>
+                <div class="item" id="d16">D16</div>
+                <div class="item" id="d17">D17</div>
+                <div class="item" id="d18">D18</div>
+                <div class="item" id="d19">D19</div>
+                <div class="item" id="d20">D20</div>
+                <div class="item" id="d21">D21</div>
+                <div class="item" id="d22">D22</div>
+                <div class="item" id="d23">D23</div>
+                <div class="item" id="d24">D24</div>
+                <div class="item" id="d25">D25</div>
+                <div class="item" id="d26">D26</div>
+                <div class="item" id="d27">D27</div>
+                <div class="item" id="d28">D28</div>
+                <div class="item" id="d29">D29</div>
+                <div class="item" id="d30">D30</div>
+                <div class="item" id="d31">D31</div>
+                <div class="item" id="d32">D32</div>
+                <div class="item" id="d33">D33</div>
+                <div class="item" id="d34">D34</div>
+                <div class="item" id="d35">D35</div>
+                <div class="item" id="d36">D36</div>
+                <div class="item" id="d37">D37</div>
+                <div class="item" id="d38">D38</div>
+                <div class="item" id="d39">D39</div>
+                <div class="item" id="d40">D40</div>
+                <div class="item" id="d41">D41</div>
+                <div class="item" id="d42">D42</div>
+                <div class="item" id="d43">D43</div>
+                <div class="item" id="d44">D44</div>
+                <div class="item" id="d45">D45</div>
+                <div class="item" id="d46">D46</div>
+                <div class="item" id="d47">D47</div>
+                <div class="item" id="d48">D48</div>
+                <div class="item" id="d49">D49</div>
+            </div>
+        
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+               <script>
+              const url = 'https://iot.invt.com/data_server/query_token';
+              let token = '';
+          
+              function getToken() {
+                  const params = 'username=gfsb_overseas&skey=123456';
+                  const xhr = new XMLHttpRequest();
+                  xhr.open('POST', url);
+                  xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+          
+                  xhr.onload = function() {
+                      if (xhr.status === 200) {
+                          token = JSON.parse(xhr.responseText).data.token;
+                          console.log(JSON.parse(xhr.responseText));
+                      } else {
+                          console.log('Request failed. Returned status of', xhr.status);
+                      }
+                  };
+          
+                  xhr.onerror = function() {
+                      console.log('Request failed.');
+                  };
+          
+                  xhr.send(params);
+              }
+          
+              getToken();
+          
+              function getData() {
+                  $.ajax({
+                      url: "https://iot.invt.com/data_server/getDeviceData.api",
+                      type: "POST",
+                      data: {
+                          "data": JSON.stringify({"deviceCode":"I06227029585"}),
+                          "token": token
+                      },
+                      success: function(response) {
+                          // console.log(JSON.stringify(response));
+                          if (response.ret === 1) {
+                              getToken();
+                          } else {
+                              var data = response.data;
+                              // Phân tích thành nhị phân 16 bit
+                              for (var i = 0; i <= 49; i++) {
+                                var key = "d" + i;
+                                var value = data[i];
+var binary = parseInt(value).toString(2);
+
+// Tín hiệu D0-2013 (Inside-call)
+var value0 = data[0];
+for (var j = 0; j <= 9; j++) {
+var bit0d0 = value0 >> j & 1;
+if (bit0d0 === 1) {
+document.getElementsByClassName("circle")[j].style.backgroundColor = "#13F54E";
+} else {
+document.getElementsByClassName("circle")[j].style.backgroundColor = "#BFBFBF";
+}
+}
+
+// Tín hiệu D0-2017 (Up-call)
+var value1 = data[1];
+for (var k = 10; k <= 19; k++) {
+var bit0d1 = value1 >> (k - 10) & 1;
+if (bit0d1 === 1) {
+document.getElementsByClassName("circle")[k].style.backgroundColor = "#13F54E";
+} else {
+document.getElementsByClassName("circle")[k].style.backgroundColor = "#BFBFBF";
+}
+}
+
+// Tín hiệu D0-2021 (Down-call)
+var value2 = data[2];
+for (var l = 20; l <= 29; l++) {
+var bit0d2 = value2 >> (l - 20) & 1;
+// Thay đổi màu sắc của circle tương ứng
+if (bit0d2 === 1) {
+document.getElementsByClassName("circle")[l].style.backgroundColor = "#13F54E";
+} else {
+document.getElementsByClassName("circle")[l].style.backgroundColor = "#BFBFBF";
+}
+}
+
+// Tín hiệu D7-0x2113 (Bit14-Area)
+var AreaColor = "";
+var value7 = data[7];
+for (var m = 30; m <= 45; m++) {
+var bit14d7 = value7 >> (m - 31) & 1;
+if (bit14d7 === 1) {
+    AreaColor = "#13F54E";
+} else {
+    AreaColor = "white";
+}
+document.getElementById("Area").style.backgroundColor = AreaColor;
+}
+
+// Tín hiệu D8-0x2114 (Bit7-Safety_loop, Bit8-Hall_lock, Bit9-Cardoor_lock)
+var SafetyloopColor = "";
+var HalllockColor = "";
+var CardoorlockColor = "";
+var value8 = data[8];
+
+for (var n = 50; n <= 65; n++) {
+
+  var bit7d8 = value8 >> (n - 58) & 1;
+  if (bit7d8 === 1) {
+    SafetyloopColor = "#13F54E";
+  }
+  else{
+    SafetyloopColor = "white";
+  }
+  
+  var bit8d8 = value8 >> (n - 57) & 1;
+  if (bit8d8 === 1) {
+    HalllockColor = "#13F54E";
+  }
+  else{
+    HalllockColor = "white";
+  }
+
+  var bit9d8 = value8 >> (n - 56) & 1;
+  if (bit9d8 === 1) {
+    CardoorlockColor = "#13F54E";
+  }
+  else{
+    CardoorlockColor = "white";
+  }
+
+}
+
+document.getElementById("Safety_loop").style.backgroundColor = SafetyloopColor;
+document.getElementById("Hall_lock").style.backgroundColor = HalllockColor;
+document.getElementById("Cardoor_lock").style.backgroundColor = CardoorlockColor;
+
+
+// Tín hiệu D9-0x2117 (Bit2-Overload, Bit3-Open_door_in_place, Bit4-Close_in_place)
+var OverloadColor = "";
+var OpendoorinplaceColor = "";
+var CloseinplaceColor = "";
+var value9 = data[9];
+
+for (var o = 70; o <= 85; o++) {
+
+  var bit2d9 = value9 >> (o - 83) & 1;
+  if (bit2d9 === 1) {
+    OverloadColor = "#13F54E";
+  }
+  else{
+    OverloadColor = "white";
+  }
+  
+  var bit3d9 = value9 >> (o - 82) & 1;
+  if (bit3d9 === 1 & bit5d10 === 1) {
+    OpendoorinplaceColor = "#13F54E";
+    openElevator();
+  }
+  if (bit3d9 === 1 & bit5d10 != 1) {
+    OpendoorinplaceColor = "#13F54E";
+    openedElevator();
+  }
+  else{
+    OpendoorinplaceColor = "white";
+    // closedElevator();
+  }
+
+  var bit4d9 = value9 >> (o - 81) & 1;
+  if (bit4d9 === 1 & bit6d10 === 1) {
+    CloseinplaceColor = "#13F54E";
+    closeElevator();
+  }
+  if (bit4d9 === 1 & bit6d10 != 1) {
+    CloseinplaceColor = "#13F54E";
+    // closedElevator();
+  }
+  else{
+    CloseinplaceColor = "white";
+  }
+
+}
+
+document.getElementById("Overload").style.backgroundColor = OverloadColor;
+document.getElementById("Open_door_in_place").style.backgroundColor = OpendoorinplaceColor;
+document.getElementById("Close_in_place").style.backgroundColor = CloseinplaceColor;
+
+
+// Tín hiệu D10-0x2118 (Bit5-Open_door_output, Bit6-Closed_output)
+var OpendooroutputColor = "";
+var ClosedoutputColor = "";
+var value10 = data[10];
+
+for (var p = 90; p <= 105; p++) {
+
+  var bit5d10 = value10 >> (p - 100) & 1;
+  if (bit5d10 === 1) {
+    OpendooroutputColor = "#13F54E";
+    // openElevator()
+  }
+  if (bit5d10 === 1 & bit3d9 !=1) {
+    // openElevator()
+  }
+  else{
+    OpendooroutputColor = "white";
+    // closedElevator();
+  }
+  
+  var bit6d10 = value10 >> (p - 99) & 1;
+  if (bit6d10 === 1) {
+    ClosedoutputColor = "#13F54E";
+    // closeElevator()
+  }
+  if (bit6d10 === 1 & bit4d9 != 1) {
+    // closeElevator();
+  }
+  else{
+    ClosedoutputColor = "white";
+    // openedElevator()
+  }
+
+}
+
+document.getElementById("Open_door_output").style.backgroundColor =  OpendooroutputColor;
+document.getElementById("Closed_output").style.backgroundColor = ClosedoutputColor;
+
+
+
+// Tín hiệu D12-0x2120 (Bit0-Up_arrow, Bit3-Maintenance, Bit5-Fault, Bit6-Lock_ladder, Bit7-Fire_fighting, Bit11-Independent_state)
+var UparrowColor = "";
+var DownarrowColor = "";
+var MaintenanceColor = "";
+var FaultColor = "";
+var LockladderColor = "";
+var FirefightingColor = "";
+var IndependentstateColor = "";
+var faultbuttonColor = "";
+var value12 = data[12];
+
+for (var q = 110; q <= 125; q++) {
+
+  var bit0d12 = value12 >> (q - 125) & 1;
+  if (bit0d12 === 1) {
+    UparrowColor = "#13F54E";
+    changeUpArrow();
+   }
+  else{
+    UparrowColor = "red";
+    resetUpArrows();
+  }
+ 
+  var bit1d12 = value12 >> (q - 124) & 1;
+  if (bit1d12 === 1) {
+    DownarrowColor = "#13F54E";
+    changeDownArrow();
+   }
+  else{
+    DownarrowColor = "red";
+    resetDownArrows();
+  } 
+
+  var bit3d12 = value12 >> (q - 122) & 1;
+  if (bit3d12 === 1) {
+    MaintenanceColor = "#13F54E";
+  }
+  else{
+    MaintenanceColor = "white";
+  }
+  var isPopupShown = false;
+  var bit5d12 = value12 >> (q - 120) & 1;
+  if (bit5d12 != 1) {
+    FaultColor = "white";
+    faultbuttonColor = "white";
+    // hidePopup();
+    }
+    else {
+        FaultColor = "red";
+        faultbuttonColor = "red";
+        // showPopup();
+    }
+
+  var bit6d12 = value12 >> (q - 119) & 1;
+  if (bit6d12 === 1) {
+    LockladderColor = "#13F54E";
+  }
+  else{
+    LockladderColor = "white";
+  }
+
+  var bit7d12 = value12 >> (q - 118) & 1;
+  if (bit7d12 === 1) {
+    FirefightingColor = "#13F54E";
+  }
+  else{
+    FirefightingColor = "white";
+  }
+
+  var bit11d12 = value12 >> (q - 114) & 1;
+  if (bit11d12 === 1) {
+    IndependentstateColor = "#13F54E";
+  }
+  else{
+    IndependentstateColor = "white";
+  }
+
+  
+
+}
+
+document.getElementById("Maintenance").style.backgroundColor = MaintenanceColor;
+document.getElementById("Fault").style.backgroundColor = FaultColor;
+document.getElementById("Lock_ladder").style.backgroundColor = LockladderColor;
+document.getElementById("Fire_fighting").style.backgroundColor = FirefightingColor;
+document.getElementById("Independent_state").style.backgroundColor = IndependentstateColor;
+document.getElementById("fault_button").style.backgroundColor = faultbuttonColor;
+}
+                              
+
+
+
+
+        // Gán với html
+                              for (var i = 0; i <= 49; i++) {
+                                  var key = "d" + i;
+                                  var value = data[i];
+                                  $("#" + key).html(value);
+                                  // Hiển thị chiều cao hiện tại của cabin
+                                  var value_height = data[5];
+                                  $("#height").html(value_height);
+                                  // Hiển thị tầng hiện tại
+                                  var value_tanghientai = data[6];
+                                  $("#tanghientai").html(value_tanghientai);
+                                  // Hiển thị tốc độ chạy
+                                  var value_runningspeed = data[11];
+                                  $("#Running_speed").html(value_runningspeed);
+                                  // Hiển thị Run number
+                                  var value_runnumber = data[3];
+                                  $("#Run_number").html(value_runnumber);
+                                  // Hiển thị điện áp hiện tại
+                                  var value_voltage = data[14];
+                                  $("#Voltage").html(value_voltage);
+                                  // Hiển thị dòng điện hiện tại
+                                  var value_current = data[13];
+                                  $("#Current").html(value_current); 
+                                  // Hiển thị mã lỗi
+                                  var value_maloi = data[17];
+                                  var value_maloi_string = value_maloi.toString(16);
+                                  $("#maloi").html(value_maloi_string); 
+
+                                  var tenloi_message;
+                                  var nguyennhanh_message;
+                                  var bienphap_message;
+                                  var phuongthuc_message;
+                                  if (value_maloi_string === "30") {
+                                  tenloi_message = "Lỗi mạch an toàn";
+                                  nguyennhan_message = "Không kết nối mạch an toàn, Hư hỏng đến tác động của relay, Điện áp cao của mạch an toàn không bình thường";
+                                  bienphap_message = "Kiểm tra lại mạch an toàn, đo điện áp các chân, Thay contactor của mạch an toàn hay thay board I/O, Kiểm tra mạch điện áp cao";
+                                  phuongthuc_message = "Dừng khẩn, reset lỗi tự động";
+                                  } else if (value_maloi === 2) {
+                                  tenloi_message = "Lỗi nguồn cấp board I/O";
+                                  nguyennhan_message = "Nguồn 24VDC nguy hiểm hay không có, Chưa nối dây nguồn";
+                                  bienphap_message = "Lỗi Kiểm tra cáp kết nối giữa board I/O và biến tầnnguồn cấp board I/O, Kiểm tra bộ nguồn";
+                                  phuongthuc_message = "Dừng khẩn, reset lỗi tự động";
+                                  } else {
+                                  tenloi_message = "Không tìm thấy thông tin phù hợp";
+                                  nguyennhan_message = "Không tìm thấy thông tin phù hợp";
+                                  bienphap_message = "Không tìm thấy thông tin phù hợp";
+                                  phuongthuc_message = "Không tìm thấy thông tin phù hợp";
+                                  }
+                                  $("#tenloi").html(tenloi_message);  
+                                  $("#nguyennhan").html(nguyennhan_message);    
+                                  $("#bienphap").html(bienphap_message); 
+                                  $("#phuongthuc").html(phuongthuc_message); 
+                                  
+                                  
+                              }
+                          }
+                      }
+                  });
+              }
+              setInterval(getData, 1000);
+        
+
+ 
+  function showPopup() {
+    Swal.fire({
+      title: "Lỗi thang máy",
+      html: `
+        <p><b>Mã lỗi:</b> <b id="maloi"; style="color:red;">maloi</b></p>
+        <p><b>Tên lỗi:</b> <b id="tenloi"; style="color:red;">tenloi</b></p>
+        <p><b>Nguyên nhân:</b> <b id="nguyennhan" style="color:red;">nguyennhan</b></p>
+        <p><b>Biện pháp giải quyết:</b> <b id="bienphap" style="color:red;">bienphap</b></p>
+        <p><b>Phương thức xử lý:</b> <b id="phuongthuc" style="color:red;">phuongthuc</b></p>                
+      `,
+      icon: "error",
+      showCloseButton: true,
+      showConfirmButton: false,
+      allowOutsideClick: false,
+      allowEscapeKey: false,
+      allowEnterKey: false,
+      footer: '<a href="https://dattech.com.vn/">Xem chi tiết lỗi</a>',
+      width: "500px",
+      background: 'white',
+    });
+  }
+  function hidePopup() {
+  Swal.close(); // Close the currently open popup
+}
+
+</script>
+
+
+
+
+<!-- Xử lý Gif thang máy -->
+<script>
+ function openElevator() {
+  var img = document.getElementById("my_image_thangmay2");
+  img.src = "./images/Thangmay2.gif";
+  setTimeout(function() {
+    img.src = "./images/Elevator_open.png";
+  }, 1000);
+}
+
+function closeElevator() {
+  var img = document.getElementById("my_image_thangmay2");
+  img.src = "./images/Thangmay2_out.gif";
+  setTimeout(function() {
+  img.src = "./images/Elevator_close.png";
+  }, 1000);
+}
+
+function openedElevator() {
+  var img = document.getElementById("my_image_thangmay2");
+  img.src = "./images/Elevator_open.png";
+}
+
+function closedElevator() {
+  var img = document.getElementById("my_image_thangmay2");
+  img.src = "./images/Elevator_close.png";
+}
+
+</script>
+
+<script>
+  function changeUpArrow() {
+    document.getElementById("Up_arrow").src = "./images/Up_arrow.gif";
+  }
+
+  function changeDownArrow() {
+    document.getElementById("Down_arrow").src = "./images/Down_arrow.gif";
+  }
+
+  function resetUpArrows() {
+    document.getElementById("Up_arrow").src = "./images/Up_arrow_copy.jpg";
+  }
+
+  function resetDownArrows() {
+    document.getElementById("Down_arrow").src = "./images/Down_arrow_copy.jpg";
+  }
+
+  function resetArrows() {
+    document.getElementById("Up_arrow").src = "./images/Up_arrow_copy.jpg";
+    document.getElementById("Down_arrow").src = "./images/Down_arrow_copy.jpg";
+  }
+</script>
+
+<!-- Popup lỗi thang máy và thông tin lỗi -->
+
+</body>
+</html>
